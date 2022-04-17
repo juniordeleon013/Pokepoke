@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image } from 'react-native';
+
+import ImageColors from 'react-native-image-colors';
+import { useNavigation } from '@react-navigation/native';
 
 import { FadeInImage } from './FadeInImage';
 
@@ -13,16 +16,44 @@ interface IProps {
 
 export const PokemonCard = ( { pokemon }: IProps ) => {
 
+    const isMounted = useRef(true);
+    const [bgColor, setBgColor] = useState('grey');
+    const { navigate } = useNavigation();
+
     const { name, picture, id } = pokemon;
+
+    useEffect(() => {
+        
+
+        ImageColors.getColors( picture, { fallback: 'grey' })
+            .then( colors => {
+                if( !isMounted.current ) return ;
+                        
+                ( colors.platform === "android" )
+                    ? setBgColor(colors.dominant || 'grey')
+                    : setBgColor(colors.background || 'grey')
+                
+            })
+        
+            return () => {
+                isMounted.current = false;
+            }
+        
+    }, [])
 
     return (
         <TouchableOpacity
             activeOpacity={ 0.9 }
+            onPress={ () => navigate("Pokemon", { 
+                simplePokemon: pokemon,
+                color: bgColor, 
+            })}
         >
             <View
                 style={{ 
                     ...styles.cardContainer,
-                    width: windowWidth * 0.4
+                    width: windowWidth * 0.4,
+                    backgroundColor: bgColor,
                  }}
             >
                 {/* pokemon name */}
@@ -51,7 +82,6 @@ export const PokemonCard = ( { pokemon }: IProps ) => {
 const styles = StyleSheet.create({
     cardContainer:{
         marginHorizontal: 10,
-        backgroundColor: 'grey',
         height: 120,
         width: 160,
         marginBottom: 25,
