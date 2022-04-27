@@ -77,7 +77,6 @@ export const PokemonScreen = ( { route, navigation }: IProps ) => {
                     </View>
                 ): <PokemonDetails pokemon={ pokemon }/>
             }
-
         </View>
     )
 }

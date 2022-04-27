@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, FlatList, ActivityIndicator } from 'react-native';
+import { View, Text, Image, FlatList, ActivityIndicator, TextInput } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -20,6 +20,7 @@ export const HomeScreen = () => {
 
     return (
         <View style={{ top }}>
+            
             <Image
                 source={require('../assets/pokebola.png')}
                 style={ styles.pokeballBG }

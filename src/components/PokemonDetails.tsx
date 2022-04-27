@@ -19,6 +19,7 @@ export const PokemonDetails = ( { pokemon }: IProps ) => {
             <View style={{ 
                 ...styles.container,
                 marginTop: 370,
+                paddingBottom: 100,
              }}>
                 <Text style={ styles.title }>Types</Text>   
                 <View style={{  flexDirection:'row' }}>
@@ -68,6 +69,52 @@ export const PokemonDetails = ( { pokemon }: IProps ) => {
                 />
             </ScrollView>
 
+            <View style={ styles.container }>
+                <Text style={ styles.title }>Stats</Text>   
+                <View>
+                    {
+                        pokemon.stats.map( ( stat, i ) => (
+                            <View
+                                style={{ flexDirection:'row' }} 
+                                key={ stat.stat.name + i }
+                            >
+                                <Text
+                                    style={{ 
+                                        ...styles.regularText,
+                                        marginRight: 10,
+                                        width: "80%",
+                                    }}
+                                >
+                                    { stat.stat.name }
+                                </Text>
+
+                                <Text
+                                    style={{ 
+                                        ...styles.regularText,
+                                        marginRight: 10,
+                                        width: "20%",
+                                        fontWeight: 'bold'
+                                    }}
+                                >
+                                    { stat.base_stat }
+                                </Text>
+
+                            </View>
+                        ))
+                    }
+                </View>
+            </View>
+
+            {/* Final Sprite */}
+            <View style={{ 
+                alignItems: 'center',
+                marginBottom: 30,
+             }}>
+                <FadeInImage 
+                    uri={ pokemon.sprites.front_shiny }
+                    style={ styles.basicSprite }
+                />
+            </View>
         </ScrollView>
     )
 }
